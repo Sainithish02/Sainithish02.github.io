@@ -359,6 +359,96 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
 .reveal.in { opacity: 1; transform: none; }
 
+
+/* ===== wow layer ===== */
+/* intro loader */
+.loader { position: fixed; inset: 0; z-index: 100; background: var(--bg); display: grid; place-items: center; transition: opacity .6s ease, visibility .6s; }
+.loader.done { opacity: 0; visibility: hidden; }
+.boot { font: 400 15px/1.9 "JetBrains Mono", monospace; color: var(--muted); width: min(460px, 86vw); }
+.boot .l { opacity: 0; transform: translateY(6px); animation: bootIn .35s ease forwards; }
+.boot .g { color: #34D399; } .boot .c { color: var(--cyan); }
+.boot .bar { height: 3px; border-radius: 3px; background: var(--line); margin-top: 14px; overflow: hidden; }
+.boot .bar i { display: block; height: 100%; width: 0; background: var(--grad); animation: load 1.5s ease forwards .2s; }
+.loader .skip { position: absolute; bottom: 28px; right: 28px; color: var(--muted); font-size: 13px; background: none; border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+@keyframes bootIn { to { opacity: 1; transform: none; } }
+@keyframes load { to { width: 100%; } }
+
+/* scroll progress */
+.progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--grad); z-index: 60; box-shadow: 0 0 12px rgba(46,230,214,.7); }
+
+/* particle canvas */
+#net { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+.hero-shell { position: relative; }
+
+/* cursor glow */
+.cursor-glow { position: fixed; left: 0; top: 0; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(circle, rgba(76,141,255,.16), transparent 62%); transition: opacity .3s; }
+@media (hover: none) { .cursor-glow { display: none; } }
+
+/* headline letters */
+.hero h1 .ch { display: inline-block; opacity: 0; transform: translateY(.6em) rotate(6deg); filter: blur(6px); }
+.hero.play h1 .ch { animation: chIn .7s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: calc(var(--i) * 28ms); }
+@keyframes chIn { to { opacity: 1; transform: none; filter: none; } }
+.hero h1 .grad { background-size: 200% auto; animation: shimmer 6s linear infinite; }
+.hero h1 .grad { background: none; -webkit-text-fill-color: initial; color: var(--text); animation: none; }
+.hero h1 .grad .ch { -webkit-text-fill-color: currentColor; text-shadow: 0 0 28px rgba(46,230,214,.25); }
+@keyframes shimmer { to { background-position: 200% center; } }
+.grad-anim { background: linear-gradient(120deg, #4C8DFF, #2EE6D6, #FFD43B, #4C8DFF); background-size: 300% auto; }
+
+/* staged hero items */
+.hero .stage { opacity: 0; transform: translateY(18px); }
+.hero.play .stage { animation: up .8s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: var(--d, 0s); }
+@keyframes up { to { opacity: 1; transform: none; } }
+
+/* editor lines type in */
+.editor pre .row { display: block; opacity: 0; transform: translateX(-8px); }
+.hero.play .editor pre .row { animation: rowIn .4s ease forwards; animation-delay: calc(1.1s + var(--r) * 90ms); }
+@keyframes rowIn { to { opacity: 1; transform: none; } }
+.editor { transform-style: preserve-3d; transition: transform .15s ease-out; }
+.editor .run .ok { animation: okPop .5s ease 2.6s both; }
+@keyframes okPop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+/* 3d tilt cards */
+.tilt { transform-style: preserve-3d; will-change: transform; }
+.project.tilt:hover { transform: none; }
+
+/* magnetic buttons */
+.magnetic { transition: transform .2s ease-out, box-shadow .2s; }
+
+/* glowing border on hover */
+.project::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; background: conic-gradient(from var(--a, 0deg), transparent 0 60%, #2EE6D6, #4C8DFF, transparent 90%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity .3s; animation: rot 4s linear infinite; pointer-events: none; }
+.project:hover::before { opacity: 1; }
+@property --a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes rot { to { --a: 360deg; } }
+
+/* section heading underline draw */
+.section-head h2 { position: relative; display: inline-block; }
+.section-head h2::after { content: ""; position: absolute; left: 0; bottom: -8px; height: 3px; width: 100%; border-radius: 3px; background: var(--grad); transform: scaleX(0); transform-origin: left; transition: transform 1s cubic-bezier(.2,.8,.2,1) .3s; }
+.section-head.in h2::after { transform: scaleX(1); }
+
+/* skill pop */
+.skill-group.in .skill { animation: pop .5s cubic-bezier(.2,1.4,.4,1) both; }
+.skill-group.in .skill:nth-child(2) { animation-delay: .06s; } .skill-group.in .skill:nth-child(3) { animation-delay: .12s; }
+.skill-group.in .skill:nth-child(4) { animation-delay: .18s; } .skill-group.in .skill:nth-child(5) { animation-delay: .24s; }
+@keyframes pop { from { opacity: 0; transform: scale(.6); } }
+
+/* process steps light up in turn */
+.process.in-view .step .num { animation: glow 5s ease-in-out infinite; }
+.process.in-view .step:nth-child(2) .num { animation-delay: 1s; } .process.in-view .step:nth-child(3) .num { animation-delay: 2s; }
+.process.in-view .step:nth-child(4) .num { animation-delay: 3s; } .process.in-view .step:nth-child(5) .num { animation-delay: 4s; }
+@keyframes glow { 0%, 25%, 100% { background: var(--card-solid); color: var(--text); } 8%, 16% { background: var(--grad); color: #06101F; box-shadow: 0 0 34px rgba(46,230,214,.55); } }
+.process::after { content: ""; position: absolute; top: 30px; left: 31px; height: 4px; width: 0; border-radius: 4px; background: var(--grad); box-shadow: 0 0 14px rgba(46,230,214,.8); }
+.process.in-view::after { animation: travel 5s linear infinite; }
+@keyframes travel { from { width: 0; } to { width: calc(80% - 30px); } }
+@media (max-width: 960px) { .process::after { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .loader { display: none; }
+  .hero .stage, .hero h1 .ch, .editor pre .row { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .cursor-glow, #net { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -367,6 +457,19 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 </style>
 </head>
 <body>
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="boot">
+    <div class="l" style="animation-delay:.05s">$ python portfolio.py</div>
+    <div class="l" style="animation-delay:.35s"><span class="g">✔</span> loading experience ........ <span class="c">2 years</span></div>
+    <div class="l" style="animation-delay:.65s"><span class="g">✔</span> connecting to PostgreSQL .. <span class="c">ok</span></div>
+    <div class="l" style="animation-delay:.95s"><span class="g">✔</span> running tests ............. <span class="c">passed</span></div>
+    <div class="l" style="animation-delay:1.25s"><span class="g">✔</span> starting server ........... <span class="c">200 OK</span></div>
+    <div class="bar"><i></i></div>
+  </div>
+  <button class="skip" id="skipBtn">Skip intro</button>
+</div>
+<div class="progress" id="progress"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 <div class="bg-glow" aria-hidden="true"></div>
 <div class="grid-bg" aria-hidden="true"></div>
 
@@ -388,20 +491,21 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   </div>
 </nav>
 
+<div class="hero-shell"><canvas id="net" aria-hidden="true"></canvas>
 <header id="top" class="wrap hero">
   <div>
-    <div class="badge"><span class="pulse"></span>Open to Python backend roles in the NYC area</div>
-    <h1>Hi, I'm Sai.<br><span class="grad">I build backends that work.</span></h1>
-    <p class="typing" aria-label="Python backend developer working with FastAPI, Django, Flask, PostgreSQL, REST APIs, and Docker">&gt; building with <span class="word" id="typed"></span><span class="caret"></span></p>
-    <p class="lead">Python backend developer with two years of experience building web applications from scratch: REST APIs, databases, authentication, and testing, from first design to production.</p>
-    <div class="actions">
-      <a class="btn btn-primary" href="#projects">View my work</a>
-      <a class="btn btn-outline" href="resume.pdf" download="Tadi_Sai_Nithish_Resume.pdf">
+    <div class="badge stage" style="--d:.1s"><span class="pulse"></span>Python Backend Developer</div>
+    <h1>Hi, I'm Sai.<br><span class="grad grad-anim">I build backends that work.</span></h1>
+    <p class="typing stage" style="--d:.9s" aria-label="Python backend developer working with FastAPI, Django, Flask, PostgreSQL, REST APIs, and Docker">&gt; building with <span class="word" id="typed"></span><span class="caret"></span></p>
+    <p class="lead stage" style="--d:1.05s">Python backend developer with two years of experience building web applications from scratch: REST APIs, databases, authentication, and testing, from first design to production.</p>
+    <div class="actions stage" style="--d:1.2s">
+      <a class="magnetic btn btn-primary" href="#projects">View my work</a>
+      <a class="magnetic btn btn-outline" href="resume.pdf" download="Tadi_Sai_Nithish_Resume.pdf">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>
         Download resume
       </a>
     </div>
-    <div class="socials">
+    <div class="socials stage" style="--d:1.35s">
       <a href="https://github.com/Sainithish02" target="_blank" rel="noopener" aria-label="GitHub">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 00-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 015.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.4-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0012 .5z"/></svg>
       </a>
@@ -411,31 +515,19 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </div>
 
-  <div class="hero-visual">
+  <div class="hero-visual stage" style="--d:.6s">
     <div class="photo-bubble" id="photoBubble"><img src="photo.jpg" alt="Tadi Sai Nithish" onerror="document.getElementById('photoBubble').remove()"></div>
     <div class="editor" aria-label="Example FastAPI code">
       <div class="editor-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
         <span class="editor-file"><i class="devicon-python-plain colored"></i>api/main.py</span></div>
-<pre><span class="ln">1</span><span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI, Depends
-<span class="ln">2</span><span class="kw">from</span> .auth <span class="kw">import</span> current_user
-<span class="ln">3</span>
-<span class="ln">4</span>app = <span class="fn">FastAPI</span>(title=<span class="st">"Backend API"</span>)
-<span class="ln">5</span>
-<span class="ln">6</span><span class="dc">@app.get</span>(<span class="st">"/notes"</span>)
-<span class="ln">7</span><span class="kw">async def</span> <span class="fn">list_notes</span>(user=<span class="fn">Depends</span>(current_user)):
-<span class="ln">8</span>    <span class="cm"># JWT-protected, scoped to the user</span>
-<span class="ln">9</span>    <span class="kw">return await</span> db.<span class="fn">fetch_notes</span>(owner=user.id)
-<span class="ln">10</span>
-<span class="ln">11</span><span class="dc">@app.post</span>(<span class="st">"/notes"</span>, status_code=<span class="nb">201</span>)
-<span class="ln">12</span><span class="kw">async def</span> <span class="fn">create_note</span>(note: <span class="ty">NoteIn</span>,
-<span class="ln">13</span>                      user = <span class="fn">Depends</span>(current_user)):
-<span class="ln">14</span>    <span class="kw">return await</span> db.<span class="fn">insert_note</span>(note, owner=user.id)</pre>
+<pre><span class="row" style="--r:0"><span class="ln">1</span><span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI, Depends</span><span class="row" style="--r:1"><span class="ln">2</span><span class="kw">from</span> .auth <span class="kw">import</span> current_user</span><span class="row" style="--r:2"><span class="ln">3</span></span><span class="row" style="--r:3"><span class="ln">4</span>app = <span class="fn">FastAPI</span>(title=<span class="st">"Backend API"</span>)</span><span class="row" style="--r:4"><span class="ln">5</span></span><span class="row" style="--r:5"><span class="ln">6</span><span class="dc">@app.get</span>(<span class="st">"/notes"</span>)</span><span class="row" style="--r:6"><span class="ln">7</span><span class="kw">async def</span> <span class="fn">list_notes</span>(user=<span class="fn">Depends</span>(current_user)):</span><span class="row" style="--r:7"><span class="ln">8</span>    <span class="cm"># JWT-protected, scoped to the user</span></span><span class="row" style="--r:8"><span class="ln">9</span>    <span class="kw">return await</span> db.<span class="fn">fetch_notes</span>(owner=user.id)</span><span class="row" style="--r:9"><span class="ln">10</span></span><span class="row" style="--r:10"><span class="ln">11</span><span class="dc">@app.post</span>(<span class="st">"/notes"</span>, status_code=<span class="nb">201</span>)</span><span class="row" style="--r:11"><span class="ln">12</span><span class="kw">async def</span> <span class="fn">create_note</span>(note: <span class="ty">NoteIn</span>,</span><span class="row" style="--r:12"><span class="ln">13</span>                      user = <span class="fn">Depends</span>(current_user)):</span><span class="row" style="--r:13"><span class="ln">14</span>    <span class="kw">return await</span> db.<span class="fn">insert_note</span>(note, owner=user.id)</span></pre>
       <div class="run"><span class="ok">200 OK</span><span>GET /notes &nbsp;|&nbsp; pytest: all tests passing</span></div>
     </div>
     <div class="chip c1"><i class="devicon-postgresql-plain colored"></i>PostgreSQL</div>
     <div class="chip c2"><i class="devicon-docker-plain colored"></i>Docker</div>
   </div>
 </header>
+</div>
 
 <main>
   <div class="wrap">
@@ -479,7 +571,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <h2>From idea to production</h2>
         <p>As the only developer at OrphaNova, I've run every stage of the build myself.</p>
       </div>
-      <div class="process">
+      <div class="process" id="processRow">
         <div class="step reveal"><div class="num">1</div><h3>Understand</h3><p>Gather requirements and agree on what the system has to do.</p></div>
         <div class="step reveal"><div class="num">2</div><h3>Design</h3><p>Plan the architecture, API endpoints, and database schema.</p></div>
         <div class="step reveal"><div class="num">3</div><h3>Build</h3><p>Write clean Python services with validation, auth, and logging.</p></div>
@@ -525,7 +617,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <p>Personal projects with the code on GitHub.</p>
       </div>
       <div class="projects">
-        <article class="project reveal">
+        <article class="project tilt reveal">
           <div class="preview" aria-hidden="true"><span class="m">POST</span> /auth/login<br><span class="g">200</span> { <span class="k">"access_token"</span>: <span class="v">"eyJhbGciOi..."</span> }<br><span class="m">GET</span> &nbsp;/notes &nbsp;<span class="c"># Bearer token</span><br><span class="g">200</span> [ { <span class="k">"id"</span>: <span class="v">1</span>, <span class="k">"title"</span>: <span class="v">"Sprint plan"</span> } ]<br><span class="c">$ pytest --cov &nbsp;&nbsp;</span><span class="g">85% covered</span></div>
           <div class="top">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span>
@@ -537,7 +629,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <div class="tags"><span class="tag">Flask</span><span class="tag">JWT</span><span class="tag">PostgreSQL</span><span class="tag">pytest</span><span class="tag">Docker</span></div>
           <a class="more" href="https://github.com/Sainithish02" target="_blank" rel="noopener">View code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </article>
-        <article class="project reveal">
+        <article class="project tilt reveal">
           <div class="preview" aria-hidden="true"><span class="c">routes/ &nbsp;&nbsp;&rarr; services/ &nbsp;&rarr; repository/</span><br><span class="m">POST</span> &nbsp;&nbsp;/users &nbsp;&nbsp;&nbsp;&nbsp;<span class="g">201 Created</span><br><span class="m">GET</span> &nbsp;&nbsp;&nbsp;/users/42 &nbsp;<span class="g">200 OK</span><br><span class="m">PUT</span> &nbsp;&nbsp;&nbsp;/users/42 &nbsp;<span class="g">200 OK</span><br><span class="m">DELETE</span> /users/42 &nbsp;<span class="g">204 No Content</span></div>
           <div class="top">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0114 0M17 11l2 2 4-4"/></svg></span>
@@ -549,7 +641,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <div class="tags"><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">Docker</span><span class="tag">OOP</span></div>
           <a class="more" href="https://github.com/Sainithish02/flask-user-management-api" target="_blank" rel="noopener">View code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </article>
-        <article class="project reveal">
+        <article class="project tilt reveal">
           <div class="preview" aria-hidden="true"><span class="c">live video &nbsp;|&nbsp; multi-angle</span><br><span class="k">pose</span>: <span class="v">keypoints tracked</span><br><span class="k">motion</span>: <span class="v">sudden drop</span><br><span class="m">FALL DETECTED</span> &nbsp;<span class="c">alert sent</span><br><span class="c">model accuracy &nbsp;</span><span class="g">92%</span></div>
           <div class="top">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
@@ -766,6 +858,111 @@ document.querySelectorAll(".project").forEach(card => {
     card.style.setProperty("--my", (e.clientY - r.top) + "px");
   });
 });
+
+
+// ===== wow layer =====
+const hero = document.querySelector(".hero");
+// split headline into letters
+const h1 = hero.querySelector("h1"); let li = 0;
+(function split(node) {
+  [...node.childNodes].forEach(n => {
+    if (n.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach(part => {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        const w = document.createElement("span"); w.style.whiteSpace = "nowrap"; w.style.display = "inline-block";
+        [...part].forEach(c => { const sp = document.createElement("span"); sp.className = "ch"; sp.style.setProperty("--i", li++); sp.textContent = c; w.appendChild(sp); });
+        frag.appendChild(w);
+      });
+      n.replaceWith(frag);
+    } else if (n.nodeType === 1 && n.tagName !== "BR") split(n);
+  });
+})(h1);
+// color gradient letters blue -> cyan
+const gl = h1.querySelectorAll(".grad .ch");
+gl.forEach((c, k) => {
+  const t = gl.length > 1 ? k / (gl.length - 1) : 0;
+  const mix = (a, b) => Math.round(a + (b - a) * t);
+  c.style.color = "rgb(" + mix(76, 46) + "," + mix(141, 230) + "," + mix(255, 214) + ")";
+});
+
+// intro loader
+const loader = document.getElementById("loader");
+function startHero() { loader.classList.add("done"); hero.classList.add("play"); }
+if (reduce) { startHero(); }
+else {
+  const t = setTimeout(startHero, 2000);
+  document.getElementById("skipBtn").addEventListener("click", () => { clearTimeout(t); startHero(); });
+}
+
+// scroll progress
+const prog = document.getElementById("progress");
+window.addEventListener("scroll", () => {
+  const h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.transform = "scaleX(" + (h > 0 ? scrollY / h : 0) + ")";
+}, { passive: true });
+
+// cursor glow
+const glow = document.getElementById("cursorGlow");
+if (!reduce) window.addEventListener("pointermove", e => { glow.style.transform = "translate(" + e.clientX + "px," + e.clientY + "px)"; }, { passive: true });
+
+// particle network in hero
+(function () {
+  if (reduce) return;
+  const cv = document.getElementById("net"), ctx = cv.getContext("2d");
+  let W, H, pts = [], mouse = { x: -999, y: -999 }, dpr = Math.min(devicePixelRatio || 1, 2);
+  function size() {
+    const r = cv.parentElement.getBoundingClientRect(); W = r.width; H = r.height;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.min(90, Math.floor(W * H / 16000));
+    pts = Array.from({ length: n }, () => ({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .45, vy: (Math.random() - .5) * .45 }));
+  }
+  size(); addEventListener("resize", size);
+  cv.parentElement.addEventListener("pointermove", e => { const r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
+  cv.parentElement.addEventListener("pointerleave", () => { mouse.x = mouse.y = -999; });
+  (function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of pts) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
+      const dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.hypot(dx, dy);
+      if (d < 140) { p.x += dx / d * 1.2; p.y += dy / d * 1.2; }
+    }
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 130) { ctx.strokeStyle = "rgba(76,141,255," + (0.22 * (1 - d / 130)) + ")"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+      }
+      const md = Math.hypot(pts[i].x - mouse.x, pts[i].y - mouse.y);
+      if (md < 180) { ctx.strokeStyle = "rgba(46,230,214," + (0.45 * (1 - md / 180)) + ")"; ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); }
+      ctx.fillStyle = "rgba(147,190,255,.7)"; ctx.beginPath(); ctx.arc(pts[i].x, pts[i].y, 1.6, 0, 7); ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  })();
+})();
+
+// 3d tilt on project cards and editor
+function tilt(el, max) {
+  el.addEventListener("pointermove", e => {
+    const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    el.style.transform = "perspective(900px) rotateX(" + (-y * max) + "deg) rotateY(" + (x * max) + "deg) translateY(-4px)";
+  });
+  el.addEventListener("pointerleave", () => { el.style.transform = ""; });
+}
+if (!reduce && matchMedia("(hover: hover)").matches) {
+  document.querySelectorAll(".tilt").forEach(el => tilt(el, 10));
+  tilt(document.querySelector(".editor"), 8);
+  // magnetic buttons
+  document.querySelectorAll(".magnetic").forEach(b => {
+    b.addEventListener("pointermove", e => { const r = b.getBoundingClientRect(); b.style.transform = "translate(" + (e.clientX - r.left - r.width / 2) * .25 + "px," + (e.clientY - r.top - r.height / 2) * .35 + "px)"; });
+    b.addEventListener("pointerleave", () => { b.style.transform = ""; });
+  });
+}
+
+// process row animation when visible
+const pr = document.getElementById("processRow");
+new IntersectionObserver(es => es.forEach(e => e.isIntersecting && pr.classList.add("in-view")), { threshold: .4 }).observe(pr);
 
 // contact form opens the visitor's email app
 const form = document.getElementById("contactForm"), msg = document.getElementById("formMsg");
