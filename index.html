@@ -97,14 +97,14 @@ nav .wrap { display: flex; align-items: center; justify-content: space-between; 
 .btn svg { width: 18px; height: 18px; }
 
 /* hero */
-.hero { min-height: 100vh; display: grid; grid-template-columns: 1.25fr .9fr; align-items: center; gap: 56px; padding-top: 110px; padding-bottom: 60px; }
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 56px; padding-top: 110px; padding-bottom: 60px; }
 .badge {
   display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted);
   border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 14px 6px 10px; margin-bottom: 22px;
 }
 .pulse { width: 9px; height: 9px; border-radius: 50%; background: #34D399; box-shadow: 0 0 0 0 rgba(52, 211, 153, .6); animation: pulse 2s infinite; }
 @keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); } 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); } }
-.hero h1 { font-size: clamp(40px, 6vw, 70px); line-height: 1.04; margin: 0 0 18px; font-weight: 800; }
+.hero h1 { font-size: clamp(40px, 5.2vw, 62px); line-height: 1.04; margin: 0 0 18px; font-weight: 800; }
 .hero h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .typing { font-family: "JetBrains Mono", monospace; font-size: clamp(16px, 2vw, 20px); color: var(--muted); margin: 0 0 26px; min-height: 1.7em; }
 .typing .word { color: var(--cyan); }
@@ -276,6 +276,85 @@ textarea { min-height: 140px; resize: vertical; }
 footer { border-top: 1px solid var(--line); padding: 30px 0 40px; color: var(--muted); font-size: 14px; }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 
+
+/* hero visual: editor + photo */
+.hero > * { min-width: 0; }
+.hero-visual { position: relative; width: 100%; max-width: 500px; justify-self: end; }
+.editor {
+  position: relative; border-radius: 16px; overflow: hidden; background: rgba(10, 16, 32, .92);
+  border: 1px solid var(--line-strong); box-shadow: 0 40px 90px -40px rgba(76, 141, 255, .65), 0 0 0 1px rgba(255,255,255,.02) inset;
+  font: 400 13.5px/1.75 "JetBrains Mono", ui-monospace, monospace; backdrop-filter: blur(10px);
+}
+.editor-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.02); }
+.dot { width: 11px; height: 11px; border-radius: 50%; }
+.dot.r { background: #FF5F57; } .dot.y { background: #FEBC2E; } .dot.g { background: #28C840; }
+.editor-file { margin-left: 10px; color: var(--muted); font-size: 12.5px; display: flex; align-items: center; gap: 6px; }
+.editor-file i { font-size: 14px; }
+.editor pre { margin: 0; padding: 18px 20px 22px; color: #C9D4E6; white-space: pre; overflow-x: auto; }
+.ln { display: inline-block; width: 22px; color: #3E5272; user-select: none; }
+.kw { color: #C792EA; } .fn { color: #82AAFF; } .st { color: #F2D27A; } .dc { color: #2EE6D6; } .cm { color: #5F7393; font-style: italic; } .ty { color: #FFCB6B; } .nb { color: #9FD8B4; }
+.editor .run {
+  display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 12.5px; background: rgba(46, 230, 214, .04);
+}
+.ok { color: #0A1A12; background: #34D399; border-radius: 5px; padding: 0 7px; font-weight: 600; }
+.photo-bubble {
+  position: absolute; top: -48px; right: -28px; width: 128px; height: 128px; border-radius: 50%; padding: 3px;
+  background: conic-gradient(from 0deg, #4C8DFF, #2EE6D6, #FFD43B, #4C8DFF); animation: spin 10s linear infinite;
+  box-shadow: 0 20px 50px -20px rgba(46, 230, 214, .6); z-index: 2;
+}
+.photo-bubble img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg); animation: spin 10s linear infinite reverse; }
+.hero-visual .chip.c1 { top: -22px; bottom: auto; left: -34px; }
+.hero-visual .chip.c2 { top: 38%; bottom: auto; right: -40px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 900px) {
+  .hero-visual { justify-self: stretch; max-width: none; order: 2; }
+  .photo-bubble { width: 96px; height: 96px; top: -40px; right: -6px; }
+  .hero-visual .chip { display: none; }
+  .editor { font-size: 12px; }
+}
+
+/* tech marquee */
+.marquee { position: relative; overflow: hidden; padding: 26px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.marquee-track { display: flex; gap: 56px; width: max-content; animation: marquee 32s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee span { display: inline-flex; align-items: center; gap: 12px; color: var(--muted); font-weight: 600; font-size: 17px; white-space: nowrap; }
+.marquee i { font-size: 30px; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* process */
+.process { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; counter-reset: step; position: relative; }
+.process::before { content: ""; position: absolute; top: 31px; left: 31px; right: calc(20% - 28px); height: 2px; background: linear-gradient(90deg, rgba(76,141,255,.6), rgba(46,230,214,.6)); opacity: .4; }
+.step { position: relative; text-align: left; }
+.step .num {
+  position: relative; z-index: 1; width: 62px; height: 62px; border-radius: 18px; display: grid; place-items: center;
+  font-family: "Sora", sans-serif; font-weight: 800; font-size: 20px; color: var(--text);
+  background: var(--card-solid); border: 1px solid var(--line-strong); margin-bottom: 18px;
+  box-shadow: 0 14px 30px -16px rgba(46, 230, 214, .55);
+}
+.step:hover .num { background: var(--grad); color: #06101F; }
+.step h3 { margin: 0 0 6px; font-size: 17px; }
+.step p { margin: 0; color: var(--muted); font-size: 14.5px; }
+@media (max-width: 960px) { .process { grid-template-columns: 1fr 1fr; gap: 28px; } .process::before { display: none; } }
+@media (max-width: 560px) { .process { grid-template-columns: 1fr; } }
+
+/* project previews */
+.preview {
+  margin: -28px -28px 22px; padding: 16px 18px; border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(76,141,255,.08), rgba(10,16,32,.6));
+  font: 400 12.5px/1.7 "JetBrains Mono", ui-monospace, monospace; color: #B8C6DB; min-height: 150px;
+}
+.preview .m { color: var(--cyan); font-weight: 600; } .preview .c { color: #5F7393; }
+.preview .k { color: #82AAFF; } .preview .v { color: #F2D27A; } .preview .g { color: #34D399; }
+.project .top { margin-top: 2px; }
+
+/* back to top */
+.to-top { position: fixed; right: 22px; bottom: 22px; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center;
+  background: var(--card-solid); border: 1px solid var(--line-strong); color: var(--text); text-decoration: none; opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; z-index: 40; }
+.to-top.show { opacity: 1; pointer-events: auto; }
+.to-top:hover { transform: translateY(-3px); }
+
 /* reveal */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
 .reveal.in { opacity: 1; transform: none; }
@@ -299,6 +378,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
+      <li><a href="#process">Process</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -331,15 +411,29 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </div>
 
-  <div class="portrait">
-    <div class="ring" aria-hidden="true"></div>
-    <div class="frame">
-      <img src="photo.jpg" alt="Tadi Sai Nithish" onerror="this.remove(); document.getElementById('initials').hidden=false;">
-      <span class="initials" id="initials" hidden>TS</span>
+  <div class="hero-visual">
+    <div class="photo-bubble" id="photoBubble"><img src="photo.jpg" alt="Tadi Sai Nithish" onerror="document.getElementById('photoBubble').remove()"></div>
+    <div class="editor" aria-label="Example FastAPI code">
+      <div class="editor-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="editor-file"><i class="devicon-python-plain colored"></i>api/main.py</span></div>
+<pre><span class="ln">1</span><span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI, Depends
+<span class="ln">2</span><span class="kw">from</span> .auth <span class="kw">import</span> current_user
+<span class="ln">3</span>
+<span class="ln">4</span>app = <span class="fn">FastAPI</span>(title=<span class="st">"Backend API"</span>)
+<span class="ln">5</span>
+<span class="ln">6</span><span class="dc">@app.get</span>(<span class="st">"/notes"</span>)
+<span class="ln">7</span><span class="kw">async def</span> <span class="fn">list_notes</span>(user=<span class="fn">Depends</span>(current_user)):
+<span class="ln">8</span>    <span class="cm"># JWT-protected, scoped to the user</span>
+<span class="ln">9</span>    <span class="kw">return await</span> db.<span class="fn">fetch_notes</span>(owner=user.id)
+<span class="ln">10</span>
+<span class="ln">11</span><span class="dc">@app.post</span>(<span class="st">"/notes"</span>, status_code=<span class="nb">201</span>)
+<span class="ln">12</span><span class="kw">async def</span> <span class="fn">create_note</span>(note: <span class="ty">NoteIn</span>,
+<span class="ln">13</span>                      user = <span class="fn">Depends</span>(current_user)):
+<span class="ln">14</span>    <span class="kw">return await</span> db.<span class="fn">insert_note</span>(note, owner=user.id)</pre>
+      <div class="run"><span class="ok">200 OK</span><span>GET /notes &nbsp;|&nbsp; pytest: all tests passing</span></div>
     </div>
-    <div class="chip c1"><i class="devicon-python-plain colored"></i>Python</div>
-    <div class="chip c2"><i class="devicon-fastapi-plain colored"></i>FastAPI</div>
-    <div class="chip c3"><i class="devicon-postgresql-plain colored"></i>PostgreSQL</div>
+    <div class="chip c1"><i class="devicon-postgresql-plain colored"></i>PostgreSQL</div>
+    <div class="chip c2"><i class="devicon-docker-plain colored"></i>Docker</div>
   </div>
 </header>
 
@@ -352,6 +446,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div class="stat"><b data-count="92" data-suffix="%">0</b><span>Accuracy of my fall detector</span></div>
     </div>
   </div>
+
+  <div class="marquee" aria-label="Technologies I use"><div class="marquee-track"><span><i class="devicon-python-plain colored"></i>Python</span><span><i class="devicon-fastapi-plain colored"></i>FastAPI</span><span><i class="devicon-django-plain"></i>Django</span><span><i class="devicon-flask-original"></i>Flask</span><span><i class="devicon-postgresql-plain colored"></i>PostgreSQL</span><span><i class="devicon-mysql-original colored"></i>MySQL</span><span><i class="devicon-docker-plain colored"></i>Docker</span><span><i class="devicon-pytest-plain colored"></i>pytest</span><span><i class="devicon-git-plain colored"></i>Git</span><span><i class="devicon-githubactions-plain colored"></i>GitHub Actions</span><span><i class="devicon-postman-plain colored"></i>Postman</span><span><i class="devicon-linux-plain"></i>Linux</span><span aria-hidden="true"></span><span><i class="devicon-python-plain colored"></i>Python</span><span><i class="devicon-fastapi-plain colored"></i>FastAPI</span><span><i class="devicon-django-plain"></i>Django</span><span><i class="devicon-flask-original"></i>Flask</span><span><i class="devicon-postgresql-plain colored"></i>PostgreSQL</span><span><i class="devicon-mysql-original colored"></i>MySQL</span><span><i class="devicon-docker-plain colored"></i>Docker</span><span><i class="devicon-pytest-plain colored"></i>pytest</span><span><i class="devicon-git-plain colored"></i>Git</span><span><i class="devicon-githubactions-plain colored"></i>GitHub Actions</span><span><i class="devicon-postman-plain colored"></i>Postman</span><span><i class="devicon-linux-plain"></i>Linux</span></div></div>
 
   <section id="about">
     <div class="wrap">
@@ -372,6 +468,23 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg></span><div><b>Security</b><span>JWT authentication, role-based access, SQL injection prevention</span></div></li>
           <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span><div><b>Testing</b><span>pytest unit and integration tests, run automatically in CI</span></div></li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">// how I work</p>
+        <h2>From idea to production</h2>
+        <p>As the only developer at OrphaNova, I've run every stage of the build myself.</p>
+      </div>
+      <div class="process">
+        <div class="step reveal"><div class="num">1</div><h3>Understand</h3><p>Gather requirements and agree on what the system has to do.</p></div>
+        <div class="step reveal"><div class="num">2</div><h3>Design</h3><p>Plan the architecture, API endpoints, and database schema.</p></div>
+        <div class="step reveal"><div class="num">3</div><h3>Build</h3><p>Write clean Python services with validation, auth, and logging.</p></div>
+        <div class="step reveal"><div class="num">4</div><h3>Test</h3><p>Cover the logic with pytest unit and integration tests.</p></div>
+        <div class="step reveal"><div class="num">5</div><h3>Ship and support</h3><p>Deploy, document, and fix issues fast with root-cause analysis.</p></div>
       </div>
     </div>
   </section>
@@ -413,6 +526,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       </div>
       <div class="projects">
         <article class="project reveal">
+          <div class="preview" aria-hidden="true"><span class="m">POST</span> /auth/login<br><span class="g">200</span> { <span class="k">"access_token"</span>: <span class="v">"eyJhbGciOi..."</span> }<br><span class="m">GET</span> &nbsp;/notes &nbsp;<span class="c"># Bearer token</span><br><span class="g">200</span> [ { <span class="k">"id"</span>: <span class="v">1</span>, <span class="k">"title"</span>: <span class="v">"Sprint plan"</span> } ]<br><span class="c">$ pytest --cov &nbsp;&nbsp;</span><span class="g">85% covered</span></div>
           <div class="top">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span>
             <span class="year">2024</span>
@@ -424,6 +538,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <a class="more" href="https://github.com/Sainithish02" target="_blank" rel="noopener">View code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </article>
         <article class="project reveal">
+          <div class="preview" aria-hidden="true"><span class="c">routes/ &nbsp;&nbsp;&rarr; services/ &nbsp;&rarr; repository/</span><br><span class="m">POST</span> &nbsp;&nbsp;/users &nbsp;&nbsp;&nbsp;&nbsp;<span class="g">201 Created</span><br><span class="m">GET</span> &nbsp;&nbsp;&nbsp;/users/42 &nbsp;<span class="g">200 OK</span><br><span class="m">PUT</span> &nbsp;&nbsp;&nbsp;/users/42 &nbsp;<span class="g">200 OK</span><br><span class="m">DELETE</span> /users/42 &nbsp;<span class="g">204 No Content</span></div>
           <div class="top">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0114 0M17 11l2 2 4-4"/></svg></span>
             <span class="year">2024</span>
@@ -435,6 +550,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <a class="more" href="https://github.com/Sainithish02/flask-user-management-api" target="_blank" rel="noopener">View code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </article>
         <article class="project reveal">
+          <div class="preview" aria-hidden="true"><span class="c">live video &nbsp;|&nbsp; multi-angle</span><br><span class="k">pose</span>: <span class="v">keypoints tracked</span><br><span class="k">motion</span>: <span class="v">sudden drop</span><br><span class="m">FALL DETECTED</span> &nbsp;<span class="c">alert sent</span><br><span class="c">model accuracy &nbsp;</span><span class="g">92%</span></div>
           <div class="top">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
             <span class="year">2023</span>
@@ -577,6 +693,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   </section>
 </main>
 
+<a class="to-top" id="toTop" href="#top" aria-label="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
 <footer>
   <div class="wrap">
     <span>Tadi Sai Nithish, Jersey City, NJ</span>
@@ -587,7 +704,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <script>
 // sticky nav background
 const nav = document.getElementById("nav");
-const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 20);
+const toTop = document.getElementById("toTop");
+const onScroll = () => { nav.classList.toggle("scrolled", window.scrollY > 20); toTop.classList.toggle("show", window.scrollY > 700); };
 window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
 // mobile menu
