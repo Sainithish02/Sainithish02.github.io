@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tadi Sai Nithish | Python Backend Developer</title>
+<meta name="description" content="Tadi Sai Nithish is a Python backend developer in Jersey City, NJ, building REST APIs with FastAPI, Django, Flask, and PostgreSQL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #FAFBFC;
+  --panel: #FFFFFF;
+  --ink: #1B2430;
+  --slate: #5A6B7D;
+  --line: #DDE3EA;
+  --blue: #2F6CA8;
+  --blue-soft: #E7F0F9;
+  --yellow: #E3B930;
+  --code-bg: #14202E;
+  --code-ink: #D7E2EE;
+  --code-key: #8FC1F0;
+  --code-str: #F2D27A;
+  --code-num: #9FD8B4;
+  --code-dim: #6F8296;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0F1620;
+    --panel: #16212E;
+    --ink: #E4EAF1;
+    --slate: #9AAABB;
+    --line: #26354A;
+    --blue: #7FB3E6;
+    --blue-soft: #1A2B3E;
+    --code-bg: #0A111A;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 17px/1.65 "IBM Plex Sans", system-ui, sans-serif;
+}
+a { color: var(--blue); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+/* nav */
+nav {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.brand { font-weight: 700; color: var(--ink); text-decoration: none; }
+nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
+nav ul a { color: var(--slate); text-decoration: none; font-size: 15px; font-weight: 500; }
+nav ul a:hover { color: var(--ink); }
+@media (max-width: 640px) { nav ul { display: none; } }
+
+/* hero */
+.hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: 48px; align-items: center; padding-top: 72px; padding-bottom: 80px; }
+.hero h1 { font-size: clamp(36px, 5vw, 52px); line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 18px; font-weight: 700; }
+.hero p.lead { font-size: 19px; color: var(--slate); margin: 0 0 28px; max-width: 34ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  display: inline-block; padding: 11px 20px; border-radius: 8px; font-weight: 600; font-size: 15px;
+  text-decoration: none; border: 1px solid var(--blue);
+}
+.btn.primary { background: var(--blue); color: #fff; }
+.btn.ghost { color: var(--blue); background: transparent; }
+@media (prefers-color-scheme: dark) { .btn.primary { color: #0F1620; } }
+@media (max-width: 860px) { .hero { grid-template-columns: 1fr; padding-top: 48px; padding-bottom: 56px; gap: 36px; } }
+
+/* api console */
+.console {
+  background: var(--code-bg); border-radius: 12px; overflow: hidden;
+  font: 400 14px/1.6 "JetBrains Mono", ui-monospace, monospace; color: var(--code-ink);
+  box-shadow: 0 18px 40px -24px rgba(20, 32, 46, .55);
+}
+.console .bar { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 14px; border-bottom: 1px solid #22334A; }
+.console button {
+  font: inherit; font-size: 13px; color: var(--code-dim); background: transparent;
+  border: 1px solid #22334A; border-radius: 6px; padding: 4px 10px; cursor: pointer;
+}
+.console button[aria-selected="true"] { color: var(--code-ink); border-color: #3B5677; background: #1C2C40; }
+.console .req { padding: 14px 18px 0; color: var(--code-dim); }
+.console .req .verb { color: var(--code-num); font-weight: 600; }
+.console .status { display: inline-block; margin-left: 8px; color: #0F1620; background: var(--yellow); border-radius: 4px; padding: 0 6px; font-size: 12px; font-weight: 600; }
+.console pre { margin: 0; padding: 10px 18px 20px; white-space: pre-wrap; word-break: break-word; min-height: 248px; }
+.k { color: var(--code-key); } .s { color: var(--code-str); } .n { color: var(--code-num); } .p { color: var(--code-dim); }
+
+/* sections */
+section { padding: 64px 0; border-top: 1px solid var(--line); }
+section h2 { font-size: 28px; letter-spacing: -0.01em; margin: 0 0 28px; }
+.cols { display: grid; grid-template-columns: 220px 1fr; gap: 32px; }
+@media (max-width: 760px) { .cols { grid-template-columns: 1fr; gap: 8px; } }
+.measure { max-width: 68ch; }
+.muted { color: var(--slate); }
+
+/* experience */
+.job h3, .project h3, .school h3 { margin: 0; font-size: 19px; }
+.meta { color: var(--slate); font-size: 15px; margin: 2px 0 14px; }
+ul.points { margin: 0; padding-left: 20px; }
+ul.points li { margin-bottom: 6px; }
+
+/* projects */
+.projects { display: grid; gap: 0; }
+.project { padding: 26px 0; border-bottom: 1px solid var(--line); }
+.project:first-child { padding-top: 0; }
+.project:last-child { border-bottom: 0; padding-bottom: 0; }
+.project .head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 12px; padding: 0; list-style: none; }
+.tags li { font-size: 13px; color: var(--blue); background: var(--blue-soft); border-radius: 999px; padding: 2px 10px; }
+.stat { font-weight: 600; color: var(--ink); }
+
+/* skills */
+dl.skills { margin: 0; display: grid; grid-template-columns: 170px 1fr; gap: 10px 24px; }
+dl.skills dt { font-weight: 600; }
+dl.skills dd { margin: 0; color: var(--slate); }
+@media (max-width: 560px) { dl.skills { grid-template-columns: 1fr; gap: 2px; } dl.skills dd { margin-bottom: 10px; } }
+
+/* education */
+.school + .school { margin-top: 20px; }
+
+/* contact */
+.contact p { font-size: 19px; margin: 0 0 20px; max-width: 46ch; }
+footer { padding: 28px 0 40px; color: var(--slate); font-size: 14px; border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top">Tadi Sai Nithish</a>
+    <ul>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header id="top" class="wrap hero">
+  <div>
+    <h1>Python backend developer who builds APIs from the ground up.</h1>
+    <p class="lead">I design and build REST APIs and backend services with FastAPI, Django, Flask, and PostgreSQL. Based in Jersey City, NJ.</p>
+    <div class="actions">
+      <a class="btn primary" href="mailto:sainithishtadi@gmail.com">Email me</a>
+      <a class="btn ghost" href="https://github.com/Sainithish02" target="_blank" rel="noopener">View GitHub</a>
+    </div>
+  </div>
+
+  <div class="console" aria-label="Profile shown as an API response">
+    <div class="bar" role="tablist" aria-label="Choose an endpoint">
+      <button role="tab" aria-selected="true" data-ep="profile">/profile</button>
+      <button role="tab" aria-selected="false" data-ep="stack">/stack</button>
+      <button role="tab" aria-selected="false" data-ep="projects">/projects</button>
+    </div>
+    <div class="req"><span class="verb">GET</span> <span id="path">/api/sai/profile</span><span class="status">200 OK</span></div>
+    <pre id="out" role="tabpanel" aria-live="polite"></pre>
+  </div>
+</header>
+
+<main>
+  <section id="about">
+    <div class="wrap cols">
+      <h2>About</h2>
+      <div class="measure">
+        <p>I'm a Python backend developer with two years of experience at OrphaNova Inc., where I built the company's web applications from scratch as the sole developer. That means I've owned everything from requirements and system design to testing, deployment, and fixing issues in production.</p>
+        <p class="muted">I hold an M.S. in Computer Science from the University of Bridgeport (May 2026) and a B.Tech in Computer Science and Engineering. I'm looking for backend developer roles in the New York City area.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap cols">
+      <h2>Experience</h2>
+      <div class="job measure">
+        <h3>Python Full Stack Developer (Contract)</h3>
+        <p class="meta">OrphaNova Inc., Remote, New York, NY &nbsp;|&nbsp; Aug 2024 to present</p>
+        <ul class="points">
+          <li>Built the company's web applications from scratch as the sole developer, owning requirement analysis, system design, development, testing, deployment, and production support.</li>
+          <li>Design, develop, and maintain backend services and REST APIs in Python using FastAPI and Django, with business logic, authentication, request validation, error handling, and logging.</li>
+          <li>Build and integrate REST APIs and microservices that let the company's applications and services communicate.</li>
+          <li>Write SQL queries and manage application data in PostgreSQL and MySQL, tuning queries to improve database performance.</li>
+          <li>Write unit and integration tests, debug issues, and resolve production problems through root-cause analysis.</li>
+          <li>Maintain technical documentation for APIs, application components, and development processes.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap cols">
+      <h2>Projects</h2>
+      <div class="projects measure">
+        <article class="project">
+          <div class="head"><h3>Notes Management REST API</h3><span class="muted">2024</span></div>
+          <ul class="tags"><li>Python</li><li>Flask</li><li>JWT</li><li>PostgreSQL</li><li>pytest</li><li>Docker</li><li>GitHub Actions</li></ul>
+          <p>A secure notes API with JWT login, role-based access control, and input validation. Parameterized queries guard against SQL injection, and a GitHub Actions pipeline runs the test suite on every push, at <span class="stat">85% test coverage</span>. All <span class="stat">12 endpoints</span> are documented in a Postman collection.</p>
+          <a href="https://github.com/Sainithish02" target="_blank" rel="noopener">See it on GitHub</a>
+        </article>
+        <article class="project">
+          <div class="head"><h3>User Management REST API</h3><span class="muted">2024</span></div>
+          <ul class="tags"><li>Python</li><li>Flask</li><li>SQLite</li><li>Docker</li></ul>
+          <p>Full create, read, update, and delete for user accounts, organized in three layers: routes, business logic, and data access. Containerized with Docker and documented in a complete README.</p>
+          <a href="https://github.com/Sainithish02/flask-user-management-api" target="_blank" rel="noopener">See it on GitHub</a>
+        </article>
+        <article class="project">
+          <div class="head"><h3>Real-Time Fall Detection System</h3><span class="muted">2023</span></div>
+          <ul class="tags"><li>Python</li><li>OpenCV</li><li>TensorFlow</li><li>pytest</li></ul>
+          <p>A computer vision pipeline that spots falls in live video using pose estimation and multi-angle motion tracking, reaching <span class="stat">92% accuracy</span>. The TensorFlow model was fine-tuned and the system validated with automated tests.</p>
+          <a href="https://github.com/Sainithish02" target="_blank" rel="noopener">See it on GitHub</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap cols">
+      <h2>Skills</h2>
+      <dl class="skills measure">
+        <dt>Languages</dt><dd>Python, SQL, Java, C, JavaScript</dd>
+        <dt>Backend</dt><dd>FastAPI, Django, Flask, RESTful APIs, JWT authentication, role-based access control</dd>
+        <dt>Databases</dt><dd>PostgreSQL, MySQL, SQLite</dd>
+        <dt>Testing</dt><dd>pytest, unit testing, API testing, Postman</dd>
+        <dt>Tools</dt><dd>Git, GitHub, GitHub Actions, Docker, Linux</dd>
+        <dt>Also</dt><dd>OpenCV, TensorFlow, object-oriented programming, Agile</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="wrap cols">
+      <h2>Education</h2>
+      <div class="measure">
+        <div class="school">
+          <h3>Master of Science in Computer Science</h3>
+          <p class="meta">University of Bridgeport, Bridgeport, CT &nbsp;|&nbsp; May 2026</p>
+        </div>
+        <div class="school">
+          <h3>Bachelor of Technology in Computer Science and Engineering</h3>
+          <p class="meta">Malla Reddy College of Engineering and Technology, Hyderabad, India &nbsp;|&nbsp; 2020 to 2024</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap cols">
+      <h2>Contact</h2>
+      <div>
+        <p>I'm open to Python backend developer roles in the New York City area. The best way to reach me is by email.</p>
+        <div class="actions">
+          <a class="btn primary" href="mailto:sainithishtadi@gmail.com">sainithishtadi@gmail.com</a>
+          <a class="btn ghost" href="https://github.com/Sainithish02" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Tadi Sai Nithish, Jersey City, NJ</div>
+</footer>
+
+<script>
+const data = {
+  profile: {
+    name: "Tadi Sai Nithish",
+    role: "Python Backend Developer",
+    location: "Jersey City, NJ",
+    experience_years: 2,
+    current: "OrphaNova Inc. (sole developer)",
+    education: "M.S. Computer Science, May 2026",
+    open_to_work: true
+  },
+  stack: {
+    languages: ["Python", "SQL", "Java", "JavaScript"],
+    frameworks: ["FastAPI", "Django", "Flask"],
+    databases: ["PostgreSQL", "MySQL", "SQLite"],
+    testing: ["pytest", "Postman"],
+    tools: ["Git", "Docker", "GitHub Actions"]
+  },
+  projects: [
+    { name: "Notes Management REST API", test_coverage: "85%", endpoints: 12 },
+    { name: "User Management REST API", layers: 3 },
+    { name: "Real-Time Fall Detection", accuracy: "92%" }
+  ]
+};
+
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+function render(v, indent) {
+  const pad = "  ".repeat(indent), pad2 = "  ".repeat(indent + 1);
+  if (Array.isArray(v)) {
+    const flat = v.every(x => typeof x !== "object");
+    if (flat) return '<span class="p">[</span>' + v.map(x => render(x, 0)).join('<span class="p">, </span>') + '<span class="p">]</span>';
+    return '<span class="p">[</span>\n' + v.map(x => pad2 + render(x, indent + 1)).join('<span class="p">,</span>\n') + '\n' + pad + '<span class="p">]</span>';
+  }
+  if (v && typeof v === "object") {
+    const rows = Object.entries(v).map(([k, x]) => pad2 + '<span class="k">"' + esc(k) + '"</span><span class="p">: </span>' + render(x, indent + 1));
+    return '<span class="p">{</span>\n' + rows.join('<span class="p">,</span>\n') + '\n' + pad + '<span class="p">}</span>';
+  }
+  if (typeof v === "string") return '<span class="s">"' + esc(v) + '"</span>';
+  return '<span class="n">' + esc(v) + '</span>';
+}
+
+const out = document.getElementById("out");
+const path = document.getElementById("path");
+const tabs = document.querySelectorAll(".console button");
+function show(ep) {
+  out.innerHTML = render(data[ep], 0);
+  path.textContent = "/api/sai/" + ep;
+  tabs.forEach(t => t.setAttribute("aria-selected", t.dataset.ep === ep ? "true" : "false"));
+}
+tabs.forEach(t => t.addEventListener("click", () => show(t.dataset.ep)));
+show("profile");
+</script>
+</body>
+</html>
